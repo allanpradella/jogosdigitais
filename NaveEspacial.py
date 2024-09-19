@@ -1,30 +1,42 @@
 import pygame
+import math  
 
-class NaveEspacial(pygame.sprite.Sprite): #representação da nave - construtor
-    def __init__(self, name, image_path, initial_position): #inicializa a nave com seus argumentos
-        super().__init__() #construtor da classe pai
-        self.name = name 
-        self.image = pygame.image.load(image_path) #load da imagem 
-        self.rect = self.image.get_rect() #representação do retângulo
-        self.rect.center = initial_position #posição inicial
-        self.speed = 5 #velocidade
-        self.shield = 100 #escudo
-        self.energy = 100 #energia
-        self.alive = True #status
+class NaveEspacial(pygame.sprite.Sprite):
+    def __init__(self, name, image_path, initial_position):
+        super().__init__()  #Construtor da classe pai
+        self.direction = 0  #Direção inicial em graus
+        self.name = name
+        self.image = pygame.image.load(image_path)  #Load da imagem
+        self.original_image = self.image  #Armazena a imagem original
+        self.rect = self.image.get_rect()  #Representação do retângulo
+        self.rect.center = initial_position  # osição inicial
+        self.speed = 5  #Velocidade
+        self.shield = 100  #Escudo
+        self.energy = 100  #Energia
+        self.alive = True  #Status
 
-    def update(self): #def pra atualizar posição da nave
-        keys = pygame.key.get_pressed() #verifica os botões pra posicionar a nave
+    def update(self):
+        keys = pygame.key.get_pressed()  #Verifica os botões
+
+        #Movimentação baseada em teclas pressionadas
         if keys[pygame.K_LEFT]:
-            self.rect.x -= self.speed
+            self.direction -= 5  #Ajusta a direção para a esquerda
         if keys[pygame.K_RIGHT]:
-            self.rect.x += self.speed
-        if keys[pygame.K_UP]:
-            self.rect.y -= self.speed
-        if keys[pygame.K_DOWN]:
-            self.rect.y += self.speed
+            self.direction += 5  #Ajusta a direção para a direita
 
-        # Limitar a nave à tela (ajuste os limites de acordo com sua tela)
+        #Cálculo de novas coordenadas com base na direção e velocidade
+        radians = math.radians(self.direction)
+        dx = math.cos(radians) * self.speed
+        dy = math.sin(radians) * self.speed
+        self.rect.x += dx
+        self.rect.y += dy
+
+        #Limita o movimento dentro da tela
         self.rect.clamp_ip(pygame.Rect(0, 0, 800, 600))
 
-    def draw(self, screen): #desenha a nave
+        #Atualiza a imagem rotacionada
+        self.image = pygame.transform.rotate(self.original_image, self.direction)
+        self.rect = self.image.get_rect(center=self.rect.center)
+
+    def draw(self, screen):  #Desenha a nave
         screen.blit(self.image, self.rect)
