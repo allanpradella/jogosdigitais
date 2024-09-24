@@ -31,13 +31,13 @@ O Pygame trabalha com a padronização para cores RGB, armazenando na forma de u
 A listagem de código a seguir apresenta um mecanismo que permite a mistura das três cores básicas e viabiliza a apresentação da cor resultante, além de mostrar o valor RGB relacionado a ela. 
 
 '''
-    import pygame
-    from pygame.locals import *
-    from sys import exit
+        import pygame
+        from pygame.locals import *
+        from sys import exit
 
-    pygame.init()
+        pygame.init()
 
-    screen = pygame.display.set_mode((640, 480), 0, 32)
+        screen = pygame.display.set_mode((640, 480), 0, 32)
 
 # Creates images with smooth gradients
 def create_scales(height):
