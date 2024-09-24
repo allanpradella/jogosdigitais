@@ -87,8 +87,8 @@ Solução: fazer com que a própria classe seja responsável pela manutenção d
 A classe Singleton deve: armazenar a única instância existente; garantir que apenas uma instância seja criada. 
     * Instância refere-se a um ÚNICO OBJETO que é criado a partir de uma classe.
 
-'''
-public final class Singleton{
+    '''
+    public final class Singleton{
     private static Singleton instance = null;
     private Singleton () {
         ...
@@ -103,7 +103,7 @@ public final class Singleton{
     ...
 }
 ''' 
-''' 
+
 
 <h3> DECORATOR </h3>
 Decorator
